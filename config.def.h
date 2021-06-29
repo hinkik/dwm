@@ -11,9 +11,11 @@ static const int smartgaps          = 0;        /* 1 means no outer gap when the
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const unsigned int baralpha = 255;
+static const int barhpadding        = 20;
+static const int barvpadding        = 4;
+static const unsigned int baralpha = 170;
 static const unsigned int borderalpha = OPAQUE;
-static char font[]            = "monospace:size=10";
+static char font[]            = "monospace:size=11";
 static const char *fonts[]          = { font };
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
