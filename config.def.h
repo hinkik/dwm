@@ -3,7 +3,7 @@
 /* appearance */
 static const unsigned int refreshrate = 144;
 static const unsigned int borderpx    = 1;        /* border pixel of windows */
-static const unsigned int snap        = 4;       /* snap pixel */
+static const unsigned int snap        = 4;        /* snap pixel */
 static const unsigned int gappih      = 14;       /* horiz inner gap between windows */
 static const unsigned int gappiv      = 14;       /* vert inner gap between windows */
 static const unsigned int gappoh      = 14;       /* horiz outer gap between windows and screen edge */
@@ -42,31 +42,28 @@ typedef struct {
 const char *spcmd1[] = {"st", "-n", "spterm", "-g", "120x34", NULL };
 const char *spcmd2[] = {"discord", NULL};
 const char *spcmd3[] = {"st", "-n", "plainotes", "-e", "plainotes", "add", NULL};
-const char *spcmd4[] = {"st", "-n", "plainotes-browse", "-e", "plainotes", "browse", NULL};
 static Sp scratchpads[] = {
-	/* name          cmd  */
-	{"spterm",      spcmd1},
-	{"discord",     spcmd2},
-	{"plainotes",   spcmd3},
-	{"plainotes-browse", spcmd4},
+	/* name              cmd  */
+	{"spterm",           spcmd1},
+	{"discord",          spcmd2},
+	{"plainotes",        spcmd3},
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+static const char *tags[] = { "1", "2", "3", "4", "5" };
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class         instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
-	{ "Gimp",        NULL,     NULL,           0,         1,          0,           0,        -1 },
-	{ "Firefox",     NULL,     NULL,           1 << 8,    0,          0,          -1,        -1 },
-	{ "St",          NULL,     NULL,           0,         0,          1,           0,        -1 },
-	{ NULL,          NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
-	{ NULL,          "spterm", NULL,           SPTAG(0),  1,          1,           0,        -1 },
-	{ "discord",     NULL,     NULL,           SPTAG(1),  1,          0,           1,        -1 },
-	{ NULL,          "plainotes", NULL,        SPTAG(2),  1,          1,           0,        -1 },
-	{ NULL,          "plainotes-browse", NULL, SPTAG(3),  1,          1,           0,        -1 },
+	/* class         instance     title           tags mask  isfloating  isterminal  noswallow  monitor */
+	{ "Gimp",        NULL,        NULL,           0,         1,          0,           0,        -1 },
+	{ "Firefox",     NULL,        NULL,           1 << 8,    0,          0,          -1,        -1 },
+	{ "St",          NULL,        NULL,           0,         0,          1,           0,        -1 },
+	{ NULL,          NULL,        "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
+	{ NULL,          "spterm",    NULL,           SPTAG(0),  1,          1,           0,        -1 },
+	{ "discord",     NULL,        NULL,           SPTAG(1),  1,          0,           1,        -1 },
+	{ NULL,          "plainotes", NULL,           SPTAG(2),  1,          1,           0,        -1 },
 };
 
 /* layout(s) */
@@ -134,19 +131,18 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_Return, togglescratch,  {.ui = 0 } },
 	{ MODKEY|ShiftMask,             XK_d,      togglescratch,  {.ui = 1 } },
 	{ MODKEY,                       XK_n,      togglescratch,  {.ui = 2 } },
-	{ MODKEY|ShiftMask,             XK_n,      togglescratch,  {.ui = 3 } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
 	TAGKEYS(                        XK_4,                      3)
 	TAGKEYS(                        XK_5,                      4)
-	TAGKEYS(                        XK_6,                      5)
-	TAGKEYS(                        XK_7,                      6)
-	TAGKEYS(                        XK_8,                      7)
-	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 	{ MODKEY,                       XK_z,      incrgaps,       {.i = +1 } },
 	{ MODKEY,                       XK_x,      incrgaps,       {.i = -1 } },
+	/* Special key bindings */
+	{ 0,                            XK_Print,  spawn,          SHCMD("maim -u | xclip -selection c -t image/png") },
+	{ ShiftMask,                    XK_Print,  spawn,          SHCMD("maim -su | xclip -selection c -t image/png") },
+	{ ControlMask,                  XK_Print,  spawn,          SHCMD("maim -i \"$(xdotool getactivewindow)\" | xclip -selection c -t image/png") },
 	{ 0, XF86XK_AudioMute,		spawn,     SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioRaiseVolume,	spawn,     SHCMD("pamixer --allow-boost -i 3; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioLowerVolume,	spawn,     SHCMD("pamixer --allow-boost -d 3; kill -44 $(pidof dwmblocks)") },
