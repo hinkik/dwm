@@ -41,12 +41,10 @@ typedef struct {
 } Sp;
 const char *spcmd1[] = {"st", "-n", "spterm", "-g", "120x34", NULL };
 const char *spcmd2[] = {"discord", NULL};
-const char *spcmd3[] = {"st", "-n", "plainotes", "-e", "plainotes", NULL};
 static Sp scratchpads[] = {
 	/* name              cmd  */
 	{"spterm",           spcmd1},
 	{"discord",          spcmd2},
-	{"plainotes",        spcmd3},
 };
 
 /* tagging */
@@ -63,7 +61,6 @@ static const Rule rules[] = {
 	{ NULL,          NULL,        "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
 	{ NULL,          "spterm",    NULL,           SPTAG(0),  1,          1,           0,        -1 },
 	{ "discord",     NULL,        NULL,           SPTAG(1),  1,          0,           1,        -1 },
-	{ NULL,          "plainotes", NULL,           SPTAG(2),  1,          1,           0,        -1 },
 };
 
 /* layout(s) */
@@ -130,7 +127,6 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_Return, togglescratch,  {.ui = 0 } },
 	{ MODKEY|ShiftMask,             XK_d,      togglescratch,  {.ui = 1 } },
-	{ MODKEY,                       XK_n,      togglescratch,  {.ui = 2 } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -140,6 +136,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_z,      incrgaps,       {.i = +1 } },
 	{ MODKEY,                       XK_x,      incrgaps,       {.i = -1 } },
 	/* Special key bindings */
+	{ MODKEY,                       XK_n,      spawn,          SHCMD("st -n plainotes -e plainotes") },
 	{ 0,                            XK_Print,  spawn,          SHCMD("maim -u | xclip -selection c -t image/png") },
 	{ ShiftMask,                    XK_Print,  spawn,          SHCMD("maim -su | xclip -selection c -t image/png") },
 	{ ControlMask,                  XK_Print,  spawn,          SHCMD("maim -i \"$(xdotool getactivewindow)\" | xclip -selection c -t image/png") },
