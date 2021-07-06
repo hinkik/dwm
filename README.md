@@ -6,7 +6,8 @@ This is my fork of Suckless' window manager, DWM.
 
 ## Patches
 
-- Vanity gaps,
+- vanitygaps,
 - swallow,
 - scratchpads,
-- actualfullscreen
+- actualfullscreen,
+- left, right padding (custom patch)
