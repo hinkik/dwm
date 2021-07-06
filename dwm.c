@@ -61,10 +61,10 @@
 #define MOUSEMASK               (BUTTONMASK|PointerMotionMask)
 #define WIDTH(X)                ((X)->w + 2 * (X)->bw)
 #define HEIGHT(X)               ((X)->h + 2 * (X)->bw)
-#define NUMTAGS					(LENGTH(tags) + LENGTH(scratchpads))
+#define NUMTAGS					(numberoftags + LENGTH(scratchpads))
 #define TAGMASK     			((1 << NUMTAGS) - 1)
-#define SPTAG(i) 				((1 << LENGTH(tags)) << (i))
-#define SPTAGMASK   			(((1 << LENGTH(scratchpads))-1) << LENGTH(tags))
+#define SPTAG(i) 				((1 << numberoftags) << (i))
+#define SPTAGMASK   			(((1 << LENGTH(scratchpads))-1) << numberoftags)
 #define TEXTW(X)                (drw_fontset_getwidth(drw, (X)) + lrpad)
 
 #define OPAQUE                  0xffU
@@ -335,9 +335,6 @@ static Colormap cmap;
 /* configuration, allows nested code to access above variables */
 #include "config.h"
 
-/* compile-time check if all tags fit into an unsigned int bit array. */
-struct NumTags { char limitexceeded[LENGTH(tags) > 31 ? -1 : 1]; };
-
 /* function implementations */
 void
 applyrules(Client *c)
@@ -550,9 +547,9 @@ buttonpress(XEvent *e)
 	if (ev->window == selmon->barwin) {
 		i = x = 0;
 		do
-			x += TEXTW(tags[i]);
-		while (ev->x >= x && ++i < LENGTH(tags));
-		if (i < LENGTH(tags)) {
+			x += TEXTW(tagempty); /* assume all tagicons are same width */
+		while (ev->x >= x && ++i < numberoftags);
+		if (i < numberoftags) {
 			click = ClkTagBar;
 			arg.ui = 1 << i;
 		} else if (ev->x < x + blw)
@@ -839,14 +836,21 @@ drawbar(Monitor *m)
 			urg |= c->tags;
 	}
 	x = 0;
-	for (i = 0; i < LENGTH(tags); i++) {
-		w = TEXTW(tags[i]);
-		drw_setscheme(drw, scheme[m->tagset[m->seltags] & 1 << i ? SchemeSel : SchemeNorm]);
-		drw_text(drw, x, 0, w, bh, lrpad / 2, tags[i], urg & 1 << i);
-		if (occ & 1 << i)
-			drw_rect(drw, x + boxs, boxs, boxw, boxw,
-				m == selmon && selmon->sel && selmon->sel->tags & 1 << i,
-				urg & 1 << i);
+	for (i = 0; i < numberoftags; i++) {
+		const char *tagicon;
+
+		if (m->tagset[m->seltags] & 1 << i) {
+			tagicon = tagselected;
+		} else if (urg & 1 << i) {
+			tagicon = tagalert;
+		} else if (occ & 1 << i) {
+			tagicon = tagactive;
+		} else {
+			tagicon = tagempty;
+		}
+
+		w = TEXTW(tagicon);
+		drw_text(drw, x, 0, w, bh, lrpad / 2, tagicon, 0);
 		x += w;
 	}
 	w = blw = TEXTW(m->ltsymbol);

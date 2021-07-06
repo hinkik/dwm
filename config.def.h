@@ -48,7 +48,11 @@ static Sp scratchpads[] = {
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5" };
+static const char *tagempty = "";
+static const char *tagselected = "";
+static const char *tagactive = "";
+static const char *tagalert = "";
+static const int numberoftags = 5;
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
