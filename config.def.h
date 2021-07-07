@@ -17,7 +17,7 @@ static const int barvpadding          = 6;
 static const unsigned int baralpha    = 204;
 static const unsigned int borderalpha = OPAQUE;
 static char font[]                    = "monospace:size=10";
-static const char *fonts[]            = { font, "Noto Color Emoji:size=10" };
+static const char *fonts[]            = { font, "Twemoji:size=8" };
 static char normbgcolor[]             = "#222222";
 static char normbordercolor[]         = "#444444";
 static char normfgcolor[]             = "#bbbbbb";
