@@ -296,7 +296,7 @@ static const char broken[] = "broken";
 static char stext[256];
 static int screen;
 static int sw, sh;           /* X display screen geometry width, height */
-static int bh, blw = 0;      /* bar geometry */
+static int bh, tx = 0, blw = 0;      /* bar geometry */
 static int enablegaps = 1;   /* enables gaps, used by togglegaps */
 static int lrpad;            /* sum of left and right padding for text */
 static int (*xerrorxlib)(Display *, XErrorEvent *);
@@ -545,19 +545,23 @@ buttonpress(XEvent *e)
 		focus(NULL);
 	}
 	if (ev->window == selmon->barwin) {
-		i = x = 0;
-		do
-			x += TEXTW(tagempty); /* assume all tagicons are same width */
-		while (ev->x >= x && ++i < numberoftags);
-		if (i < numberoftags) {
-			click = ClkTagBar;
-			arg.ui = 1 << i;
-		} else if (ev->x < x + blw)
+		if (ev->x < blw)
 			click = ClkLtSymbol;
-		else if (ev->x > selmon->ww - (int)TEXTW(stext))
-			click = ClkStatusText;
-		else
+		else if (ev->x < tx)
 			click = ClkWinTitle;
+		else {
+			i = 0;
+			x = tx;
+			do
+				x += TEXTW(tagempty); /* assume all tagicons are same width */
+			while (ev->x >= x && ++i < numberoftags);
+			if (i < numberoftags) {
+				click = ClkTagBar;
+				arg.ui = 1 << i;
+			} else if (ev->x > selmon->ww - (int)TEXTW(stext)) {
+				click = ClkStatusText;
+			}
+		}
 	} else if ((c = wintoclient(ev->window))) {
 		focus(c);
 		restack(selmon);
@@ -817,15 +821,15 @@ dirtomon(int dir)
 void
 drawbar(Monitor *m)
 {
-	int x, w, tw = 0;
+	int x, w, tsw, tw = 0;
 	int boxs = drw->fonts->h / 9;
 	int boxw = drw->fonts->h / 6 + 2;
 	unsigned int i, occ = 0, urg = 0;
 	Client *c;
 
+	drw_setscheme(drw, scheme[SchemeNorm]);
 	/* draw status first so it can be overdrawn by tags later */
 	if (m == selmon) { /* status is only drawn on selected monitor */
-		drw_setscheme(drw, scheme[SchemeNorm]);
 		tw = TEXTW(stext) - lrpad + barhpadding;
 		drw_text(drw, m->ww - tw, 0, tw, bh, 0, stext, 0);
 	}
@@ -835,7 +839,25 @@ drawbar(Monitor *m)
 		if (c->isurgent)
 			urg |= c->tags;
 	}
+	
 	x = 0;
+	w = blw = TEXTW(m->ltsymbol) - lrpad / 2 + barhpadding;
+	x = drw_text(drw, x, 0, w, bh, barhpadding, m->ltsymbol, 0);
+
+	tsw = numberoftags * TEXTW(tagempty);
+	tx = (m->ww - tsw) / 2;
+
+	if ((w = tx - x) > bh) {
+		if (m->sel) {
+			x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->sel->name, 0);
+			if (m->sel->isfloating) /* doesnt work for some reason */
+				drw_rect(drw, x + boxs, boxs, boxw, boxw, m->sel->isfixed, 0);
+		} else {
+			drw_rect(drw, x, 0, w, bh, 1, 1);
+			x += w;
+		}
+	}
+
 	for (i = 0; i < numberoftags; i++) {
 		const char *tagicon;
 
@@ -853,21 +875,10 @@ drawbar(Monitor *m)
 		drw_text(drw, x, 0, w, bh, lrpad / 2, tagicon, 0);
 		x += w;
 	}
-	w = blw = TEXTW(m->ltsymbol);
-	drw_setscheme(drw, scheme[SchemeNorm]);
-	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
 
-	if ((w = m->ww - tw - x) > bh) {
-		if (m->sel) {
-			/*drw_setscheme(drw, scheme[m == selmon ? SchemeSel : SchemeNorm]);*/
-			drw_text(drw, x, 0, w, bh, lrpad / 2, m->sel->name, 0);
-			if (m->sel->isfloating)
-				drw_rect(drw, x + boxs, boxs, boxw, boxw, m->sel->isfixed, 0);
-		} else {
-			/*drw_setscheme(drw, scheme[SchemeNorm]);*/
-			drw_rect(drw, x, 0, w, bh, 1, 1);
-		}
-	}
+	w = m->ww - tw - x;
+	drw_rect(drw, x, 0, w, bh, 1, 1);
+
 	drw_map(drw, m->barwin, 0, 0, m->ww, bh);
 }
 

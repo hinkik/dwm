@@ -48,10 +48,10 @@ static Sp scratchpads[] = {
 };
 
 /* tagging */
-static const char *tagempty = "";
-static const char *tagselected = "";
-static const char *tagactive = "";
-static const char *tagalert = "";
+static const char tagempty[] = "";
+static const char tagselected[] = "";
+static const char tagactive[] = "";
+static const char tagalert[] = "";
 static const int numberoftags = 5;
 static const Rule rules[] = {
 	/* xprop(1):
@@ -74,9 +74,9 @@ static int resizehints = 1;    /* 1 means respect size hints in tiled resizals *
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ " ",      tile },    /* first entry is default */
-	{ " ",      NULL },    /* no layout function means floating behavior */
-	{ " ",      monocle },
+	{ "",      tile },    /* first entry is default */
+	{ "",      NULL },    /* no layout function means floating behavior */
+	{ "",      monocle },
 };
 
 /* key definitions */
