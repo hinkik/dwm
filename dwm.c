@@ -839,7 +839,7 @@ drawbar(Monitor *m)
 		if (c->isurgent)
 			urg |= c->tags;
 	}
-	
+
 	x = 0;
 	w = blw = TEXTW(m->ltsymbol) - lrpad / 2 + barhpadding;
 	x = drw_text(drw, x, 0, w, bh, barhpadding, m->ltsymbol, 0);
@@ -1197,6 +1197,8 @@ manage(Window w, XWindowAttributes *wa)
 	configure(c); /* propagates border_width, if size doesn't change */
 	updatewindowtype(c);
 	updatesizehints(c);
+	c->x = c->mon->mx + (c->mon->mw - WIDTH(c)) / 2;
+	c->y = c->mon->my + (c->mon->mh - HEIGHT(c)) / 2;
 	updatewmhints(c);
 	XSelectInput(dpy, w, EnterWindowMask|FocusChangeMask|PropertyChangeMask|StructureNotifyMask);
 	grabbuttons(c, 0);
@@ -2686,3 +2688,4 @@ main(int argc, char *argv[])
 	XCloseDisplay(dpy);
 	return EXIT_SUCCESS;
 }
+
