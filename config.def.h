@@ -14,8 +14,8 @@ static const int showbar              = 1;        /* 0 means no bar */
 static const int topbar               = 1;        /* 0 means bottom bar */
 static const int barhpadding          = 20;
 static const int barvpadding          = 6;
-static const unsigned int baralpha    = 170;
-static const unsigned int borderalpha = OPAQUE;
+static const float baralpha           = 0.8;
+static const float borderalpha        = 1;
 static char font[]                    = "monospace:size=10";
 static const char *fonts[]            = { font, "Twemoji:size=8" };
 static char normbgcolor[]             = "#222222";
@@ -29,10 +29,10 @@ static char *colors[][3]              = {
        [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
        [SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
 };
-static const unsigned int alphas[][3] = {
-	/*               fg      bg        border     */
-	[SchemeNorm] = { OPAQUE, baralpha, borderalpha },
-	[SchemeSel]  = { OPAQUE, baralpha, borderalpha },
+static float alphas[][3] = {
+	/*               fg bg        border     */
+	[SchemeNorm] = { 1, baralpha, borderalpha },
+	[SchemeSel]  = { 1, baralpha, borderalpha },
 };
 
 typedef struct {

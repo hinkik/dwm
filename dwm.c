@@ -67,8 +67,6 @@
 #define SPTAGMASK   			(((1 << LENGTH(scratchpads))-1) << numberoftags)
 #define TEXTW(X)                (drw_fontset_getwidth(drw, (X)) + lrpad)
 
-#define OPAQUE                  0xffU
-
 /* enums */
 enum { CurNormal, CurResize, CurMove, CurLast }; /* cursor */
 enum { SchemeNorm, SchemeSel }; /* color schemes */
