@@ -65,6 +65,7 @@ static const Rule rules[] = {
 	{ NULL,          NULL,        "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
 	{ NULL,          "spterm",    NULL,           SPTAG(0),  1,          1,           0,        -1 },
 	{ "discord",     NULL,        NULL,           SPTAG(1),  1,          0,           1,        -1 },
+	{ NULL,          "plainotes", NULL,           0,         1,          1,           0,        -1 },
 };
 
 /* layout(s) */
@@ -175,3 +176,4 @@ static Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
+
