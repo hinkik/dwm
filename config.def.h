@@ -17,7 +17,7 @@ static const int barvpadding          = 6;
 static const float baralpha           = 0.6;
 static const float borderalpha        = 0.8;
 static char font[]                    = "monospace:size=10";
-static const char *fonts[]            = { font, "Twemoji:size=8" };
+static const char *fonts[]            = { font, "Twemoji:size=9" };
 static char normbgcolor[]             = "#222222";
 static char normbordercolor[]         = "#444444";
 static char normfgcolor[]             = "#bbbbbb";
@@ -75,7 +75,7 @@ static int resizehints = 1;    /* 1 means respect size hints in tiled resizals *
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "",      tile },    /* first entry is default */
+	{ "",      tile },    /* first entry is default */
 	{ "",      NULL },    /* no layout function means floating behavior */
 	{ "",      monocle },
 };
@@ -139,12 +139,12 @@ static Key keys[] = {
 	{ MODKEY,                       XK_x,      incrgaps,       {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_k,      incnmaster,     {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_j,      incnmaster,     {.i = -1 } },
-	/*
-	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+	/*
+	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|Mod4Mask|ShiftMask,    XK_h,      incrogaps,      {.i = +1 } },
 	{ MODKEY|Mod4Mask|ShiftMask,    XK_l,      incrogaps,      {.i = -1 } },
 	{ MODKEY|Mod4Mask|ControlMask,  XK_h,      incrigaps,      {.i = +1 } },
