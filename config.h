@@ -14,7 +14,7 @@ static const int showbar              = 1;        /* 0 means no bar */
 static const int topbar               = 1;        /* 0 means bottom bar */
 static const int barhpadding          = 20;
 static const int barvpadding          = 6;
-static const float baralpha           = 0.6;
+static const float baralpha           = 0.5;
 static const float borderalpha        = 0.8;
 static char font[]                    = "monospace:size=10";
 static const char *fonts[]            = { font, "Twemoji:size=9" };
