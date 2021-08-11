@@ -2,7 +2,7 @@
 
 /* appearance */
 static const unsigned int refreshrate = 144;
-static const unsigned int borderpx    = 1;        /* border pixel of windows */
+static const unsigned int borderpx    = 2;        /* border pixel of windows */
 static const unsigned int snap        = 4;        /* snap pixel */
 static const unsigned int gappih      = 14;       /* horiz inner gap between windows */
 static const unsigned int gappiv      = 14;       /* vert inner gap between windows */
