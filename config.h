@@ -2,7 +2,7 @@
 
 /* appearance */
 static const unsigned int refreshrate = 144;
-static const unsigned int borderpx    = 2;        /* border pixel of windows */
+static const unsigned int borderpx    = 1;        /* border pixel of windows */
 static const unsigned int snap        = 4;        /* snap pixel */
 static const unsigned int gappih      = 14;       /* horiz inner gap between windows */
 static const unsigned int gappiv      = 14;       /* vert inner gap between windows */
@@ -13,11 +13,11 @@ static const int swallowfloating      = 0;        /* 1 means swallow floating wi
 static const int showbar              = 1;        /* 0 means no bar */
 static const int topbar               = 1;        /* 0 means bottom bar */
 static const int barhpadding          = 20;
-static const int barvpadding          = 6;
-static const float baralpha           = 0.5;
-static const float borderalpha        = 0.8;
-static char font[]                    = "monospace:size=10";
-static const char *fonts[]            = { font, "Twemoji:size=9" };
+static const int barvpadding          = 8;
+static const float baralpha           = 0.6;
+static const float borderalpha        = 1.0;
+static char font[]                    = "Source Code Pro:size=10";
+static const char *fonts[]            = { font, "monospace:size=12", "Twemoji:size=9" };
 static char normbgcolor[]             = "#222222";
 static char normbordercolor[]         = "#444444";
 static char normfgcolor[]             = "#bbbbbb";
